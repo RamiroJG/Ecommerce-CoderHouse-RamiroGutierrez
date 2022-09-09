@@ -1,0 +1,25 @@
+html{
+    font-size: 62.5%;
+}
+body{
+    font-size: 1.6rem;
+    line-height: 2;
+}
+
+h1,h2,h3{
+    font-family: 'Alumni Sans Pinstripe', sans-serif;
+}
+
+/* Header inicio */
+header h1{
+    font-size: 6rem;
+    font-weight: bold;
+}
+
+.hero{
+    background-image: url(../img/idea_2.jpg);
+    background-repeat: no-repeat;
+    background-position: center center;
+    height: 77.6vh
+}
+/* Header final */
