@@ -60,7 +60,7 @@ let Carrito = {
 let encontrar = 0;
 /* CONJUNTO DE FUNCIONES PARA CREAR O INICIAR SESION */
 function iniciarSesion(){
-    let opciones = Number(prompt(`Si desea crear una cuenta escriba 1 \nsi ya tiene una presione 2 \nSi no quiere crearse una presione 3`))
+    let opciones = Number(prompt(`Quiere crear una cuenta? \n1) Registrarse \n2)Iniciar Sesion \n3)No crear cuenta \n4)Ver Productos`))
 
     switch(opciones){
         case 1 : registro();
@@ -92,6 +92,8 @@ function iniciarSesion(){
                    listadoProductos();
                 }
                 break;
+
+        case 4: verProductos();break;
 
         default : alert("Opcion Erronea"); break;
     }
@@ -212,16 +214,34 @@ function buscarProducto(){
 }
 
 
-/* if( desea == 1){
-    Datos.forEach(function(arr) {
-        let resultado = Datos.filter(precio => precio.precio < 600)
-        console.log(resultado[precio])
-    });
-    let resultado = Datos.filter(precio => precio.precio < 600)
-    alert(resultado)
-}else{
-    listadoProductos()
-} */
-
-
-/* listadoProductos(); */
+// Generando CARD de forma dinamica
+function verProductos(){
+    let ver = Number(prompt('Desea ver nuestros productos: \n1)Si \n2)No'))
+    if( ver == 1){
+        for( const dato of Datos){
+            let parrafo = document.createElement('p');
+            parrafo.classList.add('titulo')
+    
+            let precio = document.createElement('p');
+            precio.classList.add('precio')
+    
+            const info = document.createElement('DIV')
+            info.classList.add('info')
+    
+            const card = document.createElement('DIV')
+            card.classList.add('card')
+    
+            parrafo.innerHTML = `${dato.nombre}`
+            precio.innerHTML = `Precio: $${dato.precio}`
+            info.appendChild(parrafo)
+            info.appendChild(precio)
+            card.appendChild(info)
+    
+            const contenedor = document.querySelector('.hacer .contenedor-cards')
+            contenedor.appendChild(card)
+        }
+    }else{
+        listadoProductos();
+    }
+    
+}
