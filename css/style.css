@@ -35,31 +35,6 @@ svg{
 }
 
 /* Carrito inicio */
-.submenu {
-    position: relative;
-}
-.submenu #carrito{
-    display: none;
-}
-.submenu:hover #carrito{
-    display: block;
-    position: absolute;
-    right:0;
-
-    top:100%;
-    z-index: 1;
-    background-color: white;
-    padding: 20px;
-    min-height: 400px;
-    min-width: 400px;
-}
-.vacio {
-    padding: 10px;
-    background-color: crimson;
-    text-align: center;
-    border-radius: 10px;
-    color: white;
-}
 .button {
   display: inline-block;
   height: 38px;
@@ -83,11 +58,10 @@ svg{
     color: #555;
 }
 .borrar-producto {
-    background-color: red;
     border-radius: 50%;
     padding: 5px 10px;
     text-decoration: none;
-    color: white;
+    color: #000814;
     font-weight: bold;
 }
 
@@ -145,3 +119,54 @@ svg{
     padding: .5rem;
 }
 /* Main final */
+
+
+/* card productos inicio */
+.listado_titulo{
+    padding-top: 7rem;
+    font-size: 4rem;
+    font-weight: 900;
+    margin-bottom: 2rem;
+}
+.listado_titulo .sub{
+    border-bottom: 2px solid #CFBF34;
+}
+.productos__grid{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3rem;
+}
+
+
+.btnBorrar a{
+    display: block;
+    text-align: center;
+    width: 16rem;
+    margin: 0 auto;
+    text-decoration: none;
+    text-transform: uppercase;
+    background-color: #000814;
+    color: #fff;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+}
+.btnBorrar a:hover{
+    background-color: #00183d;
+}
+.card_flex{
+    display: flex;
+    justify-content: space-between;
+}
+.card_price{
+    font-weight: 700;
+    font-size: 2rem;
+}
+.card_img{
+    width: 80%;
+    margin: 0 auto;
+}
+.card_info p{
+    margin-bottom: 0;
+}
+
+/* card productos final */

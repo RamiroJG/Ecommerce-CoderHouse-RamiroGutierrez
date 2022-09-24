@@ -43,31 +43,9 @@
                     <a class="text-dark text-decoration-none" href="#">Blog</a>
                     <a class="text-dark text-decoration-none"href="#">Galeria</a>
                     <a class="text-dark text-decoration-none" href="#">Contacto</a>
-                    <div class="two columns u-pull-right">
-                        <ul>
-                            <li class="submenu">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
-                                </svg> 
-                                    <div id="carrito">
-                                            
-                                            <table id="lista-carrito" class="u-full-width" >
-                                                <thead>
-                                                    <tr>
-                                                        <th>Imagen</th>
-                                                        <th>Nombre</th>
-                                                        <th>Precio</th>
-                                                        <th>Cantidad</th>
-                                                        <th></th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody></tbody>
-                                            </table>
-                                            <a href="#" id="vaciar-carrito" class="button u-full-width">Vaciar Carrito</a>
-                                    </div>
-                            </li>
-                        </ul>
-                    </div>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+                    </svg> 
                                      
                 </nav>
             </div>
@@ -122,7 +100,7 @@
     </section>
 
     <section class="hacer">
-        <h2>New <span>Arrivals</span></h2>
+        <h2>New <span class="sub">Arrivals</span></h2>
         <div class="contenedor-cards">
             <div class="card_header">
                 <img src="img/bolsa.jpg" alt="">
@@ -172,6 +150,22 @@
     </section>
 </main>
 <!-- seccion main final -->
+
+
+<!-- seccion compras inicio -->
+<h3 class="contenedor text-center listado_titulo">Listado de productos <span class="sub">seleccionados</span></h3>
+<div id="contenedor_compra" class="productos__grid contenedor">
+    
+</div>
+<div class="contenedor btnBorrar">
+    <a href="#" id="vaciar-carrito">Vaciar carrito</a>
+    <p id="plata"></p>
+</div>
+
+
+
+
+<!-- seccion compras final -->
 
 
     <script src="js/bootstrap.bundle.min.js"></script>

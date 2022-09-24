@@ -1,8 +1,10 @@
 // Variables de mi carrito
-const carrito = document.querySelector('#carrito');
-const contendorCarrito = document.querySelector('#lista-carrito tbody');
+const carrito = document.querySelector('.productos__grid');
 const vaciarCarritoBtn = document.querySelector('#vaciar-carrito');
 const listaProductos = document.querySelector('#lista-productos');
+const compra = document.querySelector('#contenedor_compra');
+const precio = document.querySelector('#plata')
+let sumPriceTotal = 0;
 
 // Array de mi carrito vacio
 let articulosCarrito = [];
@@ -12,6 +14,24 @@ let articulosCarrito = [];
 cargarEventListeners()
 function cargarEventListeners(){
     listaProductos.addEventListener('click', agregarProducto);
+
+    // Muestra los cursos de localStorage
+    document.addEventListener('DOMContentLoaded', () =>{
+        articulosCarrito = JSON.parse(localStorage.getItem('carrito')) || [];
+
+        carritoHTML();
+    })
+
+    // Eliminar producto del carrito
+    carrito.addEventListener('click', eliminarProducto);
+
+    // Vaciar el carrito
+    vaciarCarritoBtn.addEventListener('click', (e) =>{
+        e.preventDefault()
+        articulosCarrito = [];
+
+        limpiarHTML()
+    })
 }
 
 
@@ -25,6 +45,18 @@ function agregarProducto(e){
         leerDatosProducto(ProductoSeleccionado)
     }
     
+}
+
+// Elimina producto del carrito
+function eliminarProducto(e){
+    e.preventDefault()
+    if(e.target.classList.contains('borrar-producto')){
+        const productoId = e.target.getAttribute('data-id');
+
+        articulosCarrito = articulosCarrito.filter( producto => producto.id !== productoId);
+
+        carritoHTML()
+    }
 }
 
 // Lee la info del HTML al que le dimos click
@@ -50,10 +82,12 @@ function leerDatosProducto(producto){
                 producto.cantidad++;
 
                 producto.precio = `$${precioProducto * producto.cantidad}`;
+                
                 return producto; // retorna el objeto actualizado
             }else{
                 return producto;
             }
+            
         })
         articulosCarrito = [...productos]
     }else{
@@ -61,9 +95,8 @@ function leerDatosProducto(producto){
         articulosCarrito = [...articulosCarrito, infoProducto]
     }
 
-    console.log(articulosCarrito)
-
     carritoHTML();
+    
 }
 
 function carritoHTML(){
@@ -72,37 +105,42 @@ function carritoHTML(){
     // Recorre el carrito y genera el HTML
     articulosCarrito.forEach( (producto) =>{
         const {imagen, titulo, precio, cantidad, id} = producto
-        const row = document.createElement('TR');
-        row.innerHTML = `
-            <td>
-                <img src="${imagen}" width="100">
-            </td>
-            
-            <td>
-                ${titulo}
-            </td>
-            
-            <td>
-                ${precio}
-            </td>
-            
-            <td>
-                ${cantidad}
-            </td>
-
-            <td>
-                <a href="#" class="borrar-producto" data-id="${id}"> X </a>
-            </td>
+        /* const row = document.createElement('span'); */
+        compra.innerHTML += `
+        <div class="card_producto">
+            <div class="card_img">
+                <img src="${imagen}">
+            </div>
+            <div class="card_info">
+                <p>Nombre producto: ${titulo}</p>
+                <p>Precio: <span class="card_price">${precio}</span></p>
+                <div class="card_flex">
+                    <p>Cantidad: ${cantidad}</p>
+                    <a href="#" class="borrar-producto" data-id="${id}"> Eliminar producto</a>
+                </div>
+            </div>
+        </div>
         `;
-
-        // Agrega el HTML del carrito en el tbody
-        contendorCarrito.appendChild(row);
     })
+    // Agregar el carrito al LocalStorage
+    sincronizarStorage()
+    totalPrecio()
+    
 }
 
-// Elimina los productos del tbody 
+function sincronizarStorage(){
+    localStorage.setItem('carrito', JSON.stringify(articulosCarrito))
+}
+
+// Elimina los productos
 function limpiarHTML(){
-    while(contendorCarrito.firstChild){
-        contendorCarrito.removeChild(contendorCarrito.firstChild)
+    while(compra.firstChild){
+        compra.removeChild(compra.firstChild)
     }
+}
+function totalPrecio(){
+    const precioTotal = articulosCarrito.reduce( (total, producto) => total + producto.precio,0);
+    const precioTexto = `$${precioTotal}`
+
+    precio.innerHTML = `Total a pagar: ${precioTexto}`
 }
