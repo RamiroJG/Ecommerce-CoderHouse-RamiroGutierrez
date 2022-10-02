@@ -3,7 +3,8 @@ const carrito = document.querySelector('.productos__grid');
 const vaciarCarritoBtn = document.querySelector('#vaciar-carrito');
 const listaProductos = document.querySelector('#lista-productos');
 const compra = document.querySelector('#contenedor_compra');
-const precio = document.querySelector('#plata')
+const precio = document.querySelector('#plata');
+const procesarCompra = document.querySelector('#procesar-compra')
 let sumPriceTotal = 0;
 
 // Array de mi carrito vacio
@@ -22,6 +23,9 @@ function cargarEventListeners(){
         carritoHTML();
     })
 
+    // Procesar compra - con operador ternario
+    procesarCompra.addEventListener('click',procesarPedido);
+
     // Eliminar producto del carrito
     carrito.addEventListener('click', eliminarProducto);
 
@@ -31,8 +35,11 @@ function cargarEventListeners(){
         articulosCarrito = [];
 
         limpiarHTML()
+        vaciarLS()
     })
 }
+
+
 
 
 // Funciones del carrito
@@ -57,16 +64,21 @@ function eliminarProducto(e){
 
         carritoHTML()
     }
+    eliminarProductoLocalStorage(articulosCarrito.id)
 }
 
 // Lee la info del HTML al que le dimos click
 function leerDatosProducto(producto){
+    sPrecio = producto.querySelector(".card_precio p").textContent;
+    dPrecio = sPrecio.slice(1);
+    vPrecio = Number(dPrecio);
     // Creamos un objeto con los datos del producto
     const infoProducto = {
         imagen: producto.querySelector('img').src,
         titulo: producto.querySelector('h3').textContent,
-        precio: producto.querySelector('.card_precio p').textContent,
+        precio: vPrecio,
         id: producto.querySelector('a').getAttribute('data-id'),
+        subtotal: vPrecio,
         cantidad: 1
     }
 
@@ -77,11 +89,9 @@ function leerDatosProducto(producto){
         // Actualizamos la cantidad
         const productos = articulosCarrito.map( producto =>{
             if(producto.id === infoProducto.id){
-                let precioProducto = Number(infoProducto.precio.slice(1, infoProducto.precio.length))
-
                 producto.cantidad++;
 
-                producto.precio = `$${precioProducto * producto.cantidad}`;
+                producto.subtotal = `${producto.precio * producto.cantidad}`;
                 
                 return producto; // retorna el objeto actualizado
             }else{
@@ -104,8 +114,7 @@ function carritoHTML(){
 
     // Recorre el carrito y genera el HTML
     articulosCarrito.forEach( (producto) =>{
-        const {imagen, titulo, precio, cantidad, id} = producto
-        /* const row = document.createElement('span'); */
+        const {imagen, titulo, cantidad, id, subtotal} = producto
         compra.innerHTML += `
         <div class="card_producto">
             <div class="card_img">
@@ -113,7 +122,7 @@ function carritoHTML(){
             </div>
             <div class="card_info">
                 <p>Nombre producto: ${titulo}</p>
-                <p>Precio: <span class="card_price">${precio}</span></p>
+                <p>Precio: <span class="card_price">$${subtotal}</span></p>
                 <div class="card_flex">
                     <p>Cantidad: ${cantidad}</p>
                     <a href="#" class="borrar-producto" data-id="${id}"> Eliminar producto</a>
@@ -123,14 +132,37 @@ function carritoHTML(){
         `;
     })
     // Agregar el carrito al LocalStorage
+    
     sincronizarStorage()
     totalPrecio()
     
+    
 }
+
 
 function sincronizarStorage(){
     localStorage.setItem('carrito', JSON.stringify(articulosCarrito))
 }
+
+
+// Eliminar producto de localStorage
+function eliminarProductoLocalStorage(productoID){
+    let productosLS;
+    productosLS = document;
+    productosLS.forEach((productoLS, index) =>{
+        if(productoLS.id === `${infoProducto.id}`){
+            productoLS.splice(index, 1);
+        }
+    })
+    localStorage.setItem('carrito', JSON.stringify(productosLS))
+
+}
+
+// Vaciar localStorage
+function vaciarLS(){
+    localStorage.clear()
+}
+
 
 // Elimina los productos
 function limpiarHTML(){
@@ -138,9 +170,28 @@ function limpiarHTML(){
         compra.removeChild(compra.firstChild)
     }
 }
-function totalPrecio(){
-    const precioTotal = articulosCarrito.reduce( (total, producto) => total + producto.precio,0);
-    const precioTexto = `$${precioTotal}`
 
-    precio.innerHTML = `Total a pagar: ${precioTexto}`
+// Procesar compra
+function procesarPedido(e){
+    e.preventDefault();
+    Swal.fire({
+        title: 'Error!',
+        text: 'No tiene ningun producto en su carrito',
+        icon: 'error',
+        confirmButtonText: 'Cerrar y agregar productos'
+    })
+    articulosCarrito.forEach( producto =>{
+        producto.length > 0 ? (
+            procesarCompra.disabled = true
+        ) :(
+            procesarCompra.disabled = false,
+            location.href = "compra.html"
+        )
+    })
+}
+
+
+function totalPrecio(){
+    const precioTotal = articulosCarrito.reduce( (total, producto) => total + producto.precio * producto.cantidad, 0);
+    precio.innerHTML = `Total a pagar: ${precioTotal}`
 }

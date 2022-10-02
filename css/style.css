@@ -137,12 +137,16 @@ svg{
     gap: 3rem;
 }
 
+.btnBorrar{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+}
 
 .btnBorrar a{
     display: block;
     text-align: center;
-    width: 16rem;
-    margin: 0 auto;
     text-decoration: none;
     text-transform: uppercase;
     background-color: #000814;
