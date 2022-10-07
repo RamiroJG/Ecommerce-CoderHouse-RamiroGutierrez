@@ -1,0 +1,26 @@
+[
+    {
+        "titulo": "Bolsas",
+        "precio": 650,
+        "id": 4,
+        "img": "img/bolsa.jpg"
+    },
+    {
+        "titulo": "Estampados remeras",
+        "precio": 650,
+        "id": 5,
+        "img": "img/remera1.jpg"
+    },
+    {
+        "titulo": "Estampados buzos",
+        "precio": 650,
+        "id": 6,
+        "img": "img/buzo.jpg"
+    },
+    {
+        "titulo": "Mousepads",
+        "precio": 650,
+        "id": 7,
+        "img": "img/mousepad.jpg"
+    }
+]

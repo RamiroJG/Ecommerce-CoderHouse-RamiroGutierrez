@@ -5,6 +5,8 @@ const listaProductos = document.querySelector('#lista-productos');
 const compra = document.querySelector('#contenedor_compra');
 const precio = document.querySelector('#plata');
 const procesarCompra = document.querySelector('#procesar-compra')
+const card_header = document.querySelector('.contenedor-cards')
+const featured = document.querySelector('.contenedor-cards_featured')
 let sumPriceTotal = 0;
 
 // Array de mi carrito vacio
@@ -41,7 +43,6 @@ function cargarEventListeners(){
 
 
 
-
 // Funciones del carrito
 function agregarProducto(e){
     e.preventDefault()
@@ -51,7 +52,7 @@ function agregarProducto(e){
 
         leerDatosProducto(ProductoSeleccionado)
     }
-    
+    agregadoProducto()
 }
 
 // Elimina producto del carrito
@@ -64,7 +65,9 @@ function eliminarProducto(e){
 
         carritoHTML()
     }
+    eliminadoProducto()
     eliminarProductoLocalStorage(articulosCarrito.id)
+    
 }
 
 // Lee la info del HTML al que le dimos click
@@ -104,7 +107,7 @@ function leerDatosProducto(producto){
         // Agregamos los elementos al carrito
         articulosCarrito = [...articulosCarrito, infoProducto]
     }
-
+    
     carritoHTML();
     
 }
@@ -135,8 +138,6 @@ function carritoHTML(){
     
     sincronizarStorage()
     totalPrecio()
-    
-    
 }
 
 
@@ -171,6 +172,49 @@ function limpiarHTML(){
     }
 }
 
+function agregadoProducto(){
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener('mouseenter', Swal.stopTimer)
+          toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+      })
+      Toast.fire({
+        icon: 'success',
+        title: 'Producto agregado al carrito',
+        customClass: {
+            title: 'toast-tam',         
+        }
+      })
+}
+
+function eliminadoProducto(){
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener('mouseenter', Swal.stopTimer)
+          toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+      })
+      
+      Toast.fire({
+        icon: 'info',
+        title: 'Producto eliminado del carrito',
+        customClass: {
+            title: 'toast-tam',         
+        }
+      })
+}
+
 // Procesar compra
 function procesarPedido(e){
     e.preventDefault();
@@ -185,7 +229,16 @@ function procesarPedido(e){
             procesarCompra.disabled = true
         ) :(
             procesarCompra.disabled = false,
-            location.href = "compra.html"
+            Swal.fire({
+                title: 'Compra realizada con exito',
+                text: `Su codigo de seguimiento es el siguiente: ${numeroRandom()}`,
+                icon: 'success',
+                confirmButtonText: 'Cerrar ventana',
+            }),
+            setTimeout(() => {
+                vaciarLS()
+                location.reload()
+            }, 3000)
         )
     })
 }
@@ -194,4 +247,60 @@ function procesarPedido(e){
 function totalPrecio(){
     const precioTotal = articulosCarrito.reduce( (total, producto) => total + producto.precio * producto.cantidad, 0);
     precio.innerHTML = `Total a pagar: ${precioTotal}`
+}
+
+
+function traerDatos(){
+    fetch('/featured.json')
+    .then( (res) => res.json())
+    .then( (data) => {
+
+        data.forEach((producto) => {
+            card_header.innerHTML += `
+            <div class="card_header">
+                <img src="${producto.img}" alt="">
+                <div class="card_body">
+                    <h3>${producto.titulo}</h3>
+                    <p>Avellana Cajas & Souvenirs</p>
+                    <div class="card_precio">
+                        <p>$${producto.precio}</p>  
+                        <a href="#" class="agregar-carrito" data-id="${producto.id}">Agregar al carrito</a>
+                    </div> 
+                </div>
+            </div>
+            `
+        })
+    })
+}
+traerDatos()
+
+function traerDatos_new(){
+    fetch('/new.json')
+    .then( (res) => res.json())
+    .then( (data) => {
+
+        data.forEach((producto) => {
+            featured.innerHTML += `
+            <div class="card_header">
+                <img src="${producto.img}" alt="">
+                <div class="card_body">
+                    <h3>${producto.titulo}</h3>
+                    <p>Avellana Cajas & Souvenirs</p>
+                    <div class="card_precio">
+                        <p>$${producto.precio}</p>  
+                        <a href="#" class="agregar-carrito" data-id="${producto.id}">Agregar al carrito</a>
+                    </div> 
+                </div>
+            </div>
+            `
+        })
+    })
+}
+traerDatos_new()
+
+
+function numeroRandom(){
+    const ran = Math.floor(Math.random() * 1000000);
+
+    return ran;
 }

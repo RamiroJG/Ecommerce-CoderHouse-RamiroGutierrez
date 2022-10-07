@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "sweetalert2": "^11.4.37"
+    "sweetalert2": "^11.4.37",
+    "uuid": "^9.0.0"
   }
 }

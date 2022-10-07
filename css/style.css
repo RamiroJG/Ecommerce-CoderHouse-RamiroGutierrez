@@ -81,6 +81,11 @@ svg{
     grid-gap: 2rem;
     grid-template-columns: repeat(3,1fr);
 }
+.contenedor-cards_featured {
+    display: grid;
+    grid-gap: 2rem;
+    grid-template-columns: repeat(3,1fr);
+}
 .hacer h2{
     text-align: center;
     padding-top: 7rem;
@@ -171,6 +176,10 @@ svg{
 }
 .card_info p{
     margin-bottom: 0;
+}
+
+.toast-tam{
+   font-size: 20px !important;
 }
 
 /* card productos final */

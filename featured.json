@@ -1,0 +1,20 @@
+[
+    {
+        "titulo": "Cajas de madera",
+        "precio": 650,
+        "id": 1,
+        "img": "img/caja1.jpg"
+    },
+    {
+        "titulo": "Cajas de madera personalizada",
+        "precio": 650,
+        "id": 2,
+        "img": "img/cajita.jpg"
+    },
+    {
+        "titulo": "Tazas",
+        "precio": 650,
+        "id": 3,
+        "img": "img/tazas.png"
+    }
+]
